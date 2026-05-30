@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>きたがわ歯科クリニック｜東京都杉並区阿佐谷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1e9de0;
+  --blue-dk:#1480be;
+  --blue-lt:#e8f6fd;
+  --blue-pale:#f0f9fe;
+  --blue-mid:#5bb8e8;
+  --blue-circle:#d6eef9;
+  --white:#ffffff;
+  --text:#333333;
+  --muted:#666666;
+  --red:#e05252;
+  --line:#d8edf8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;font-weight:400;color:var(--text);background:var(--white);overflow-x:hidden;line-height:1.7;}
+a{text-decoration:none;color:inherit;}
+
+/* ── HEADER ── */
+header{
+  background:#fff;
+  border-bottom:3px solid var(--blue);
+  position:sticky;top:0;z-index:300;
+  box-shadow:0 2px 8px rgba(30,157,224,.1);
+}
+.header-inner{
+  max-width:1200px;margin:0 auto;
+  padding:.7rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+}
+/* ロゴ */
+.logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.logo-icon{
+  width:40px;height:40px;
+  background:var(--blue);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.3rem;
+  flex-shrink:0;
+}
+.logo-name{font-size:1.25rem;font-weight:700;color:var(--blue);letter-spacing:.03em;white-space:nowrap;}
+
+/* ナビ */
+nav{flex:1;display:flex;justify-content:center;}
+.nav-list{display:flex;list-style:none;gap:0;}
+.nav-list li a{
+  display:flex;flex-direction:column;align-items:center;gap:.15rem;
+  padding:.5rem 1.1rem;
+  font-size:.75rem;color:var(--muted);
+  transition:color .2s;
+  position:relative;
+}
+.nav-list li a .nav-icon{font-size:1.15rem;color:var(--blue);}
+.nav-list li a:hover{color:var(--blue);}
+.nav-list li a.active{color:var(--blue);}
+.nav-list li a.active::after{content:'';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:60%;height:3px;background:var(--blue);border-radius:2px 2px 0 0;}
+
+/* 住所・電話 */
+.header-right{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;gap:.1rem;}
+.header-addr{font-size:.68rem;color:var(--muted);}
+.header-tel{display:flex;align-items:center;gap:.4rem;font-size:1.5rem;font-weight:700;color:var(--blue);}
+.header-tel::before{content:'📞';font-size:1.1rem;}
+
+/* ── SLIDER / HERO ── */
+.slider{position:relative;overflow:hidden;background:#b8d8ec;}
+.slider-track{display:flex;transition:transform .6s ease;}
+.slide{min-width:100%;position:relative;height:520px;overflow:hidden;}
+/* 写真スライド */
+.slide-photo{width:100%;height:100%;object-fit:cover;display:block;}
+.slide::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,45,80,.04) 0%,rgba(0,45,80,.14) 50%,rgba(0,45,80,.5) 100%);pointer-events:none;}
+/* 歯科室の雰囲気をCSSで再現 */
+.slide-bg{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.slide-1{background:linear-gradient(120deg,#b8cdd8 0%,#d4e8f0 30%,#e8f4f8 60%,#c8dce8 100%);}
+.slide-2{background:linear-gradient(120deg,#d0e4f0 0%,#e4f0f8 40%,#f0f8fc 70%,#d8ecf4 100%);}
+.slide-3{background:linear-gradient(120deg,#c4d8e8 0%,#dceef8 50%,#e8f4fc 100%);}
+
+/* 歯科チェア・機器のSVGイラスト風 */
+.chair-illustration{
+  position:absolute;right:8%;top:50%;transform:translateY(-50%);
+  width:55%;max-width:700px;
+  opacity:.85;
+}
+/* チェア本体 */
+.chair-body{
+  position:absolute;right:0;top:0;width:100%;height:100%;
+}
+
+/* 医療機器アイコン群（CSS shapes） */
+.equip-arm{position:absolute;top:15%;right:30%;width:8px;height:55%;background:linear-gradient(180deg,#aac8dc,#8ab0c8);border-radius:4px;}
+.equip-head{position:absolute;top:12%;right:28%;width:70px;height:50px;background:#c8dce8;border-radius:8px;border:2px solid #a0bdd0;}
+.equip-tray{position:absolute;top:45%;right:5%;width:140px;height:20px;background:#d0e4f0;border-radius:4px;border:1px solid #a8c8dc;}
+.equip-light{position:absolute;top:5%;right:40%;width:120px;height:12px;background:#b0cfe0;border-radius:6px;transform:rotate(-15deg);}
+.equip-spittoon{position:absolute;bottom:25%;right:20%;width:50px;height:60px;background:#d8ecf4;border-radius:50% 50% 40% 40%;border:2px solid #a8ccdc;}
+.equip-monitor{position:absolute;top:10%;right:8%;width:90px;height:70px;background:#c0d8e8;border-radius:4px;border:2px solid #90b8cc;}
+.equip-monitor::after{content:'';position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);width:20px;height:14px;background:#a8c4d8;}
+/* チェア */
+.chair-seat{position:absolute;top:42%;right:50%;width:220px;height:70px;background:linear-gradient(180deg,#5a6a78,#3a4a58);border-radius:12px;}
+.chair-back{position:absolute;top:15%;right:48%;width:180px;height:160px;background:linear-gradient(135deg,#5a6a78,#3a4a58);border-radius:16px 16px 8px 8px;}
+.chair-leg{position:absolute;bottom:15%;right:52%;width:160px;height:20px;background:#4a5a68;border-radius:4px;}
+.chair-pillar{position:absolute;bottom:10%;right:57%;width:18px;height:35%;background:linear-gradient(180deg,#6a7a88,#4a5a68);border-radius:4px;}
+
+/* 壁・床 */
+.room-wall{position:absolute;top:0;left:0;right:0;bottom:35%;background:linear-gradient(180deg,#e8f2f8 0%,#deedf5 100%);}
+.room-floor{position:absolute;bottom:0;left:0;right:0;height:35%;background:linear-gradient(180deg,#d0e4ee 0%,#c4dae8 100%);}
+.room-panel{position:absolute;top:20%;left:5%;width:90px;height:70px;background:#d8eaf4;border-radius:4px;border:1px solid #b8d0e0;}
+.room-panel2{position:absolute;top:22%;left:7%;width:70px;height:25px;background:#c0d8ec;border-radius:3px;}
+
+.slide-caption{
+  position:absolute;
+  bottom:10%;left:5%;
+  z-index:2;
+}
+.slide-caption p{
+  font-size:clamp(1.2rem,2.5vw,1.8rem);
+  font-weight:700;
+  color:#fff;
+  text-shadow:0 2px 8px rgba(0,60,100,.3);
+  letter-spacing:.05em;
+  line-height:1.6;
+}
+.slide-caption p::before{
+  content:'';display:block;
+  width:100%;height:1px;
+  border-top:1.5px dotted rgba(255,255,255,.6);
+  margin-bottom:.4rem;
+}
+
+/* スライダー矢印 */
+.slider-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;
+  width:44px;height:44px;
+  background:rgba(255,255,255,.8);
+  border:none;border-radius:50%;
+  font-size:1.1rem;color:var(--blue);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+.slider-btn:hover{background:#fff;}
+.slider-prev{left:16px;}
+.slider-next{right:16px;}
+/* ドット */
+.slider-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;}
+.sdot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;border:none;transition:background .3s;}
+.sdot.active{background:var(--blue);}
+
+/* ── おすすめ 3列 ── */
+.features{background:var(--white);padding:5rem 1.5rem 4rem;}
+.features-inner{max-width:1100px;margin:0 auto;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;}
+.feat-item{text-align:center;}
+/* おすすめ見出し */
+.feat-label{
+  display:flex;align-items:center;justify-content:center;gap:.4rem;
+  font-size:.9rem;font-weight:500;color:var(--blue);
+  margin-bottom:1.4rem;
+  letter-spacing:.06em;
+}
+.feat-label::before,.feat-label::after{content:'／';color:var(--blue-mid);font-size:.8rem;}
+.feat-label-num{font-size:1.05rem;font-weight:700;}
+/* 円アイコン */
+.feat-icon-wrap{
+  width:160px;height:160px;border-radius:50%;
+  background:var(--blue-circle);
+  margin:0 auto 1.4rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:4.5rem;
+  position:relative;
+  overflow:hidden;
+}
+/* SVG風アイコン：CSSで */
+.feat-icon-wrap svg{width:90px;height:90px;}
+/* 吹き出しタイトルボタン */
+.feat-badge{
+  display:inline-block;
+  background:var(--blue);
+  color:#fff;
+  font-size:.95rem;font-weight:700;
+  padding:.6rem 1.6rem;
+  border-radius:30px;
+  margin-bottom:1.2rem;
+  position:relative;
+  letter-spacing:.04em;
+}
+.feat-badge::before{
+  content:'';
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;
+  border-bottom-color:var(--blue);
+}
+.feat-body{font-size:.85rem;line-height:1.9;color:var(--text);text-align:left;}
+.feat-body .red{color:var(--red);font-weight:500;}
+
+/* ── INFO / MAP ── */
+.info-section{background:var(--blue-lt);padding:4rem 1.5rem;}
+.info-inner{max-width:1100px;margin:0 auto;}
+.info-card{
+  background:#fff;border-radius:16px;
+  padding:2.5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;
+  align-items:start;
+  box-shadow:0 4px 20px rgba(30,157,224,.08);
+}
+/* 左：ロゴ＋情報 */
+.info-left{}
+.info-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;}
+.info-logo-icon{width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;}
+.info-logo-name{font-size:1.35rem;font-weight:700;color:var(--blue);}
+.info-addr{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem;}
+.info-tel-row{display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem;}
+.info-tel{font-size:2rem;font-weight:700;color:var(--blue);}
+.info-tel-icon{font-size:1.4rem;color:var(--blue);}
+.info-hours{font-size:.78rem;color:var(--muted);margin-bottom:1.2rem;}
+/* ボタン2つ */
+.info-btns{display:flex;gap:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;}
+.ibtn-main{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.75rem 1rem;background:var(--blue);color:#fff;
+  border-radius:30px;font-size:.88rem;font-weight:700;
+  border:none;cursor:pointer;transition:background .2s;
+}
+.ibtn-main:hover{background:var(--blue-dk);}
+.ibtn-sub{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.75rem 1rem;background:#fff;color:var(--blue);
+  border-radius:30px;font-size:.88rem;font-weight:500;
+  border:2px solid var(--blue);cursor:pointer;transition:background .2s;
+}
+.ibtn-sub:hover{background:var(--blue-lt);}
+/* 診療時間テーブル */
+.schedule-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.schedule-table th,.schedule-table td{padding:.55rem .4rem;text-align:center;}
+.schedule-table th:first-child,.schedule-table td:first-child{text-align:left;padding-left:.2rem;}
+.schedule-table thead th{color:var(--muted);font-weight:400;font-size:.78rem;}
+.schedule-table thead th.sat{color:var(--blue);}
+.schedule-table thead th.sun,.schedule-table thead th.hol{color:var(--red);}
+.schedule-table tbody tr{border-top:1px solid var(--line);}
+.schedule-table tbody td:first-child{color:var(--muted);white-space:nowrap;}
+.dot{color:var(--blue);font-size:.9rem;}
+.slash{color:var(--muted);}
+/* 右：地図 */
+.info-right{}
+.map-wrap{
+  border-radius:12px;overflow:hidden;border:1px solid var(--line);
+  height:280px;background:#e8f0f8;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.map-placeholder-inner{text-align:center;color:var(--blue);}
+.map-placeholder-inner .mp-icon{font-size:3rem;margin-bottom:.5rem;}
+.map-placeholder-inner p{font-size:.85rem;color:var(--muted);}
+/* iframeで実際には埋め込む想定 */
+.map-wrap iframe{width:100%;height:100%;border:none;}
+.map-open-btn{
+  display:block;text-align:right;margin-top:.5rem;
+  font-size:.75rem;color:var(--blue);
+}
+
+/* ── FOOTER LINKS ── */
+.footer-nav{background:var(--blue-lt);border-top:1px solid var(--line);padding:1.2rem 1.5rem 2rem;}
+.footer-nav-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+.footer-nav a{font-size:.82rem;color:var(--muted);transition:color .2s;}
+.footer-nav a:hover{color:var(--blue);}
+.footer-bottom{background:var(--blue);padding:.9rem;text-align:center;font-size:.72rem;color:rgba(255,255,255,.8);}
+
+/* ── SCROLL TO TOP ── */
+.scroll-top{
+  position:fixed;right:24px;bottom:24px;z-index:400;
+  width:48px;height:48px;border-radius:50%;
+  background:#fff;border:2px solid var(--blue);
+  color:var(--blue);font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.1);
+  transition:background .2s;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.scroll-top.visible{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--blue-lt);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.reveal.in{opacity:1;transform:none;}
+.rd1{transition-delay:.1s;}
+.rd2{transition-delay:.2s;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .header-inner{flex-wrap:wrap;gap:.4rem;padding:.5rem .8rem;justify-content:center;}
+  .logo{justify-content:center;width:100%;}
+  .logo-name{font-size:1.15rem;}
+  nav{flex:0 0 100%;width:100%;justify-content:flex-start;}
+  .nav-list{
+    width:100%;flex-wrap:nowrap;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    justify-content:flex-start;
+    scrollbar-width:none;
+  }
+  .nav-list::-webkit-scrollbar{display:none;}
+  .nav-list li{flex:0 0 auto;}
+  .nav-list li a{padding:.4rem .7rem;white-space:nowrap;}
+  .header-right{display:none;}
+  .slide{height:300px;}
+  .slide-caption{bottom:14%;left:5%;}
+  .chair-illustration{display:none;}
+  .slider-btn{width:38px;height:38px;font-size:1rem;}
+  .slider-prev{left:10px;}
+  .slider-next{right:10px;}
+  .features{padding:3rem 1.2rem 2.5rem;}
+  .feat-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .info-section{padding:2.5rem 1rem;}
+  .info-card{grid-template-columns:1fr;padding:1.6rem;gap:1.8rem;}
+  .info-tel{font-size:1.7rem;}
+  .map-wrap{height:240px;}
+  .footer-nav-inner{gap:1rem 1.4rem;}
+  /* 診療時間テーブルを詰める */
+  .schedule-table{font-size:.72rem;}
+  .schedule-table th,.schedule-table td{padding:.45rem .15rem;}
+}
+@media(max-width:400px){
+  .logo-name{font-size:1.05rem;}
+  .slide{height:250px;}
+  .info-tel{font-size:1.5rem;}
+  .schedule-table{font-size:.66rem;}
+  .schedule-table th,.schedule-table td{padding:.4rem .1rem;}
+  .info-btns{flex-direction:column;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── SCROLL TOP ── -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <!-- ロゴ -->
+    <div class="logo">
+      <div class="logo-icon">🦷</div>
+      <div class="logo-name">きたがわ歯科クリニック</div>
+    </div>
+
+    <!-- ナビ -->
+    <nav>
+      <ul class="nav-list">
+        <li><a href="#" class="active"><span class="nav-icon">🏠</span>ホーム</a></li>
+        <li><a href="#about"><span class="nav-icon">🏥</span>当院について</a></li>
+        <li><a href="#menu"><span class="nav-icon">📋</span>診療案内</a></li>
+        <li><a href="#staff"><span class="nav-icon">👨‍⚕️</span>スタッフ紹介</a></li>
+        <li><a href="#blog"><span class="nav-icon">✏️</span>スタッフブログ</a></li>
+        <li><a href="#contact"><span class="nav-icon">✉️</span>お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <!-- 住所・電話 -->
+    <div class="header-right">
+      <div class="header-addr">〒166-0001 東京都杉並区阿佐谷北7-3-1</div>
+      <div class="header-tel">03-1234-5678</div>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO SLIDER ── -->
+<div class="slider" id="slider">
+  <div class="slider-track" id="sliderTrack">
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1">
+      <img class="slide-photo" src="data:image/webp;base64,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" alt="歯科衛生士による丁寧な診察" loading="eager">
+      <div class="slide-caption">
+        <p>街の皆さまの笑顔を守る</p>
+        <p>アットホームな歯医者さん</p>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2">
+      <img class="slide-photo" src="data:image/webp;base64,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" alt="親子で通える歯科クリニック" loading="eager">
+      <div class="slide-caption">
+        <p>丁寧な説明と</p>
+        <p>痛みに配慮した治療</p>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3">
+      <img class="slide-photo" src="data:image/webp;base64,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" alt="清潔な診療設備" loading="eager">
+      <div class="slide-caption">
+        <p>保険診療から自費まで</p>
+        <p>安心の歯科医療を提供</p>
+      </div>
+    </div>
+
+  </div><!-- /slider-track -->
+
+  <button class="slider-btn slider-prev" id="sliderPrev">＜</button>
+  <button class="slider-btn slider-next" id="sliderNext">＞</button>
+  <div class="slider-dots">
+    <button class="sdot active" data-i="0"></button>
+    <button class="sdot" data-i="1"></button>
+    <button class="sdot" data-i="2"></button>
+  </div>
+</div><!-- /slider -->
+
+<!-- ── おすすめ 3列 ── -->
+<section class="features" id="about">
+  <div class="features-inner">
+    <div class="feat-grid">
+
+      <div class="feat-item reveal">
+        <div class="feat-label">
+          <span>おすすめ</span>
+          <span class="feat-label-num">01</span>
+        </div>
+        <div class="feat-icon-wrap">
+          <!-- 歯のSVGアイコン -->
+          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 放射線 -->
+            <line x1="45" y1="10" x2="35" y2="22" stroke="#1e9de0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="45" y1="10" x2="55" y2="22" stroke="#1e9de0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="22" y1="35" x2="32" y2="40" stroke="#1e9de0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="68" y1="35" x2="58" y2="40" stroke="#1e9de0" stroke-width="3" stroke-linecap="round"/>
+            <!-- 歯の形 -->
+            <path d="M30 35 Q28 28 35 26 Q40 24 45 28 Q50 24 55 26 Q62 28 60 35 L58 55 Q57 63 53 63 Q49 63 48 55 L45 48 L42 55 Q41 63 37 63 Q33 63 32 55 Z" fill="#1e9de0"/>
+            <!-- バツ -->
+            <line x1="38" y1="38" x2="42" y2="42" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="42" y1="38" x2="38" y2="42" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="feat-badge">痛くない歯科医療の追求</div>
+        <p class="feat-body">歯の治療において、小さな違和感は大きなストレスにつながります。<br>私たちは常に快適な歯科医療技術の研究を行っております。</p>
+      </div>
+
+      <div class="feat-item reveal rd1">
+        <div class="feat-label">
+          <span>おすすめ</span>
+          <span class="feat-label-num">02</span>
+        </div>
+        <div class="feat-icon-wrap">
+          <!-- 電車のSVGアイコン -->
+          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="22" width="54" height="46" rx="8" fill="#1e9de0"/>
+            <rect x="24" y="28" width="42" height="22" rx="4" fill="white" fill-opacity=".9"/>
+            <circle cx="29" cy="72" r="7" fill="#1e9de0" stroke="white" stroke-width="2"/>
+            <circle cx="61" cy="72" r="7" fill="#1e9de0" stroke="white" stroke-width="2"/>
+            <rect x="14" y="60" width="62" height="6" rx="3" fill="#1e9de0"/>
+            <rect x="10" y="63" width="70" height="3" rx="1.5" fill="#0d7ab8"/>
+            <rect x="30" y="55" width="10" height="5" rx="1" fill="white" fill-opacity=".6"/>
+            <rect x="50" y="55" width="10" height="5" rx="1" fill="white" fill-opacity=".6"/>
+          </svg>
+        </div>
+        <div class="feat-badge">駅から徒歩3分</div>
+        <p class="feat-body">「通いやすさ」も医院選びの重要なポイントと考え、2019年のリニューアルを期に更に駅の近くへ場所を移しました。</p>
+      </div>
+
+      <div class="feat-item reveal rd2">
+        <div class="feat-label">
+          <span>おすすめ</span>
+          <span class="feat-label-num">03</span>
+        </div>
+        <div class="feat-icon-wrap">
+          <!-- 時計のSVGアイコン -->
+          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="45" cy="48" r="30" fill="#1e9de0"/>
+            <circle cx="45" cy="48" r="25" fill="white" fill-opacity=".15"/>
+            <!-- 目盛り -->
+            <line x1="45" y1="22" x2="45" y2="27" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="45" y1="69" x2="45" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="19" y1="48" x2="24" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="66" y1="48" x2="71" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- 針 -->
+            <line x1="45" y1="48" x2="45" y2="30" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <line x1="45" y1="48" x2="33" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="45" cy="48" r="3.5" fill="white"/>
+            <!-- 月マーク -->
+            <path d="M62 22 Q72 28 68 38 Q60 32 62 22Z" fill="#1e9de0" stroke="white" stroke-width="1.5"/>
+            <circle cx="72" cy="24" r="4" fill="#1480be"/>
+            <!-- 点（夜） -->
+            <circle cx="68" cy="18" r="1.5" fill="white" fill-opacity=".7"/>
+            <circle cx="74" cy="30" r="1.5" fill="white" fill-opacity=".7"/>
+          </svg>
+        </div>
+        <div class="feat-badge">夜20:30まで営業</div>
+        <p class="feat-body">朝から夜までお仕事をされている方のために、診療時間を見直しました。<br><span class="red">※駆け込みでも対応可能ですが、事前にご連絡いただけるとスムーズです。</span></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── INFO / MAP ── -->
+<section class="info-section" id="contact">
+  <div class="info-inner">
+    <div class="info-card reveal">
+      <!-- 左：情報 -->
+      <div class="info-left">
+        <div class="info-logo">
+          <div class="info-logo-icon">🦷</div>
+          <div class="info-logo-name">きたがわ歯科クリニック</div>
+        </div>
+        <div class="info-addr">〒166-0001　東京都杉並区阿佐谷北7-3-1</div>
+
+        <div class="info-tel-row">
+          <span class="info-tel-icon">📞</span>
+          <span class="info-tel">03-1234-5678</span>
+        </div>
+        <div class="info-hours">（年中無休 AM9:00〜PM22:00）</div>
+
+        <div class="info-btns" id="reserve">
+          <button class="ibtn-main">🖥️📱 WEB予約</button>
+          <button class="ibtn-sub">✉️ お問い合わせ</button>
+        </div>
+
+        <!-- 診療時間テーブル -->
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>診療時間</th>
+              <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th>
+              <th class="sat">土</th><th class="sun">日</th><th class="hol">祝</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>9:00〜12:00</td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+            </tr>
+            <tr>
+              <td>13:00〜22:00</td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="slash">／</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+              <td><span class="dot">●</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 右：地図 -->
+      <div class="info-right">
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.8!2d139.636!3d35.706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018f2e6b8b8b8b8%3A0x0!2z6KW_5LqL6Zmk!5e0!3m2!1sja!2sjp!4v1234567890"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="きたがわ歯科クリニック 地図"
+          ></iframe>
+          <!-- iframeが読み込めない場合のフォールバック -->
+          <div class="map-placeholder-inner" id="mapFallback" style="display:none;">
+            <div class="mp-icon">🗺️</div>
+            <p style="font-weight:700;color:#1e9de0;font-size:1rem;">阿佐ヶ谷</p>
+            <p>東京都杉並区阿佐谷北7-3-1</p>
+          </div>
+        </div>
+        <a class="map-open-btn" href="https://maps.google.com/?q=東京都杉並区阿佐谷北7-3-1" target="_blank">📍 マップで開く ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER NAV ── -->
+<footer>
+  <div class="footer-nav">
+    <div class="footer-nav-inner">
+      <a href="#">TOP</a>
+      <a href="#about">当院について</a>
+      <a href="#staff">スタッフ紹介</a>
+      <a href="#menu">診療内容</a>
+      <a href="#blog">スタッフブログ</a>
+      <a href="#contact">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 きたがわ歯科クリニック All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+// ── Slider ──
+const track = document.getElementById('sliderTrack');
+const dots  = document.querySelectorAll('.sdot');
+let cur = 0, total = 3, autoTimer;
+
+function goTo(i){
+  cur = (i + total) % total;
+  track.style.transform = `translateX(-${cur * 100}%)`;
+  dots.forEach((d,idx) => d.classList.toggle('active', idx === cur));
+}
+document.getElementById('sliderPrev').onclick = () => { goTo(cur - 1); resetAuto(); };
+document.getElementById('sliderNext').onclick = () => { goTo(cur + 1); resetAuto(); };
+dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.i); resetAuto(); }));
+function resetAuto(){ clearInterval(autoTimer); autoTimer = setInterval(() => goTo(cur + 1), 4500); }
+resetAuto();
+
+// ── Reveal ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+}, {threshold: 0.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── Scroll top ──
+const stBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { stBtn.classList.toggle('visible', scrollY > 300); }, {passive:true});
+
+// ── Nav active ──
+document.querySelectorAll('.nav-list a').forEach(a => {
+  a.addEventListener('click', function(){ document.querySelectorAll('.nav-list a').forEach(x=>x.classList.remove('active')); this.classList.add('active'); });
+});
+
+// iframeフォールバック
+setTimeout(()=>{
+  const iframe = document.querySelector('.map-wrap iframe');
+  try{
+    if(!iframe.contentDocument) document.getElementById('mapFallback').style.display='flex';
+  }catch(e){ /* cross-origin: iframe is loading fine */ }
+},3000);
+</script>
+</body>
+</html>
